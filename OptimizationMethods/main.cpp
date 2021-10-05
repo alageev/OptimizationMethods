@@ -47,15 +47,15 @@ struct Interval {
 };
 
 inline double function(double x) {
-    return x * x + 3 * x + std::log(x);
+    return x * x - 3 * x + x * log(x);
 }
 
 inline double firstDerivative(double x) {
-    return 2 * x + 3 + 1 / x;
+    return 2 * x - 3 + log(x) + x / x;
 }
 
 inline double secondDerivative(double x) {
-    return 2 - 1 / (x * x);
+    return 2 + 1 / x;
 }
 
 Point halvesMethod(Interval, double);
@@ -115,12 +115,17 @@ Point goldenRatioMethod(Interval interval, double epsilon) {
 // If signs of the derivative on both sides are equal, function returns least of the ends
 Point chordesMethod(Interval interval, double epsilon) {
     
-    if (firstDerivative(interval.start) * firstDerivative(interval.end) >= 0) {
+    if (firstDerivative(interval.start) * firstDerivative(interval.end) > 0) {
         if (firstDerivative(interval.start) > 0) {
             return Point(interval.start, function(interval.start));
         } else {
             return Point(interval.end, function(interval.end));
         }
+    }
+    
+    if (firstDerivative(interval.start) * firstDerivative(interval.end) == 0) {
+        const double x = firstDerivative(interval.start) < firstDerivative(interval.end) ? interval.start : interval.end;
+        return Point(x, function(x));
     }
         
     const double intersection = interval.start + firstDerivative(interval.start) / (firstDerivative(interval.start) - firstDerivative(interval.end)) * interval.length();
