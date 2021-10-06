@@ -74,10 +74,10 @@ int main(int argc, const char * argv[]) {
     const Point chordesResult = chordesMethod(interval, epsilon);
     const Point newtonResult = newtonMethod(interval, epsilon);
     
-    std::cout << "halves method:        f(x) = " << halvesResult.value      << ", x = " << halvesResult.coordinate      << std::endl;
-    std::cout << "golden ration method: f(x) = " << goldenRatioResult.value << ", x = " << goldenRatioResult.coordinate << std::endl;
-    std::cout << "chordes method:       f(x) = " << chordesResult.value     << ", x = " << chordesResult.coordinate     << std::endl;
-    std::cout << "newton method:        f(x) = " << newtonResult.value      << ", x = " << newtonResult.coordinate      << std::endl;
+    std::cout << "halves method:       f(x) = " << halvesResult.value      << ", x = " << halvesResult.coordinate      << std::endl;
+    std::cout << "golden ratio method: f(x) = " << goldenRatioResult.value << ", x = " << goldenRatioResult.coordinate << std::endl;
+    std::cout << "chordes method:      f(x) = " << chordesResult.value     << ", x = " << chordesResult.coordinate     << std::endl;
+    std::cout << "newton method:       f(x) = " << newtonResult.value      << ", x = " << newtonResult.coordinate      << std::endl;
     
     return 0;
 }
