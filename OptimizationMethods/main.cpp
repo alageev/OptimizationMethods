@@ -69,24 +69,28 @@ int main(int argc, const char * argv[]) {
     const double epsilon = 0.05;
     const Interval interval = Interval(1, 2);
     
-    std::cout << halvesMethod(interval, epsilon).value << std::endl;
-    std::cout << goldenRatioMethod(interval, epsilon).value << std::endl;
-    std::cout << chordesMethod(interval, epsilon).value << std::endl;
-    std::cout << newtonMethod(interval, epsilon).value << std::endl;
+    const Point halvesResult = halvesMethod(interval, epsilon);
+    const Point goldenRatioResult = goldenRatioMethod(interval, epsilon);
+    const Point chordesResult = chordesMethod(interval, epsilon);
+    const Point newtonResult = newtonMethod(interval, epsilon);
+    
+    std::cout << "halves method:        f(x) = " << halvesResult.value      << ", x = " << halvesResult.coordinate      << std::endl;
+    std::cout << "golden ration method: f(x) = " << goldenRatioResult.value << ", x = " << goldenRatioResult.coordinate << std::endl;
+    std::cout << "chordes method:       f(x) = " << chordesResult.value     << ", x = " << chordesResult.coordinate     << std::endl;
+    std::cout << "newton method:        f(x) = " << newtonResult.value      << ", x = " << newtonResult.coordinate      << std::endl;
     
     return 0;
 }
 
 Point halvesMethod(Interval interval, double epsilon) {
-    
     // Checking condition satisfaction
     if (interval.length() <= 2 * epsilon) {
         return Point(interval.middle(), function(interval.middle()));
     }
     
     const double middle = interval.middle();
-    const double leftCoordinate  = middle - epsilon;
-    const double rightCoordinate = middle + epsilon;
+    const double leftCoordinate  = middle - epsilon / 2;
+    const double rightCoordinate = middle + epsilon / 2;
     
     if (function(leftCoordinate) < function(rightCoordinate)) {
         return halvesMethod(Interval(interval.start, leftCoordinate), epsilon);
@@ -96,6 +100,7 @@ Point halvesMethod(Interval interval, double epsilon) {
 }
 
 Point goldenRatioMethod(Interval interval, double epsilon) {
+    
     if (interval.length() <= 2 * epsilon) {
         return Point(interval.middle(), function(interval.middle()));
     }
@@ -105,9 +110,9 @@ Point goldenRatioMethod(Interval interval, double epsilon) {
     const double rightCoordinate = interval.start + 0.61803398875 * intervalLength;
     
     if (function(leftCoordinate) < function(rightCoordinate)) {
-        return halvesMethod(Interval(interval.start, rightCoordinate), epsilon);
+        return goldenRatioMethod(Interval(interval.start, rightCoordinate), epsilon);
     } else {
-        return halvesMethod(Interval(leftCoordinate, interval.end), epsilon);
+        return goldenRatioMethod(Interval(leftCoordinate, interval.end), epsilon);
     }
 }
 
