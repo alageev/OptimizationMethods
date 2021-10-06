@@ -8,6 +8,7 @@
 #include <iostream>
 #include <cmath>
 
+const double phi = 1.61803398875;
 
 struct Point {
     double coordinate;
@@ -101,19 +102,22 @@ Point halvesMethod(Interval interval, double epsilon) {
 
 Point goldenRatioMethod(Interval interval, double epsilon) {
     
-    if (interval.length() <= 2 * epsilon) {
-        return Point(interval.middle(), function(interval.middle()));
+    double leftCoordinate  = interval.start + (2 - phi) * interval.length();
+    double rightCoordinate = interval.start + (phi - 1) * interval.length();
+    
+    while (interval.length() > 2 * epsilon) {
+        if (function(leftCoordinate) < function(rightCoordinate)) {
+            interval.end = rightCoordinate;
+            rightCoordinate = leftCoordinate;
+            leftCoordinate = interval.start + (2 - phi) * interval.length();
+        } else {
+            interval.start = leftCoordinate;
+            leftCoordinate = rightCoordinate;
+            rightCoordinate = interval.start + (phi - 1) * interval.length();
+        }
     }
     
-    const double intervalLength = interval.length();
-    const double leftCoordinate  = interval.start + 0.38196601125 * intervalLength;
-    const double rightCoordinate = interval.start + 0.61803398875 * intervalLength;
-    
-    if (function(leftCoordinate) < function(rightCoordinate)) {
-        return goldenRatioMethod(Interval(interval.start, rightCoordinate), epsilon);
-    } else {
-        return goldenRatioMethod(Interval(leftCoordinate, interval.end), epsilon);
-    }
+    return Point(interval.middle(), function(interval.middle()));
 }
 
 
