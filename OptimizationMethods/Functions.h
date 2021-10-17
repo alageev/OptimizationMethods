@@ -23,6 +23,7 @@ double secondDerivative(double x) {
 }
 
 double halvesMethod(Interval interval, double epsilon) {
+    
     if (interval.length() <= 2 * epsilon) {
         return interval.middle();
     }
