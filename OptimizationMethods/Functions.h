@@ -10,15 +10,15 @@
 
 #include "Constants.h"
 
-inline double function(double x) {
+double function(double x) {
     return x * x - 3 * x + x * log(x);
 }
 
-inline double firstDerivative(double x) {
+double firstDerivative(double x) {
     return 2 * x - 3 + log(x) + x / x;
 }
 
-inline double secondDerivative(double x) {
+double secondDerivative(double x) {
     return 2 + 1 / x;
 }
 

@@ -7,15 +7,10 @@
 
 #include <iostream>
 #include <cmath>
-#include "Interval.h"
 #include "Functions.h"
 
 
 int main(int argc, const char * argv[]) {
-    
-    // First variant
-
-    
     const double halvesResult = halvesMethod(interval, epsilon);
     std::cout << "halves method:       f(x) = " << function(halvesResult)      << ", x = " << halvesResult      << std::endl;
     
