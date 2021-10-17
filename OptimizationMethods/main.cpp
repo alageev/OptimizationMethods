@@ -128,19 +128,22 @@ double chordesMethod(Interval interval, double epsilon) {
         throw std::range_error("invalid interval");
     }
     
-    const double difference = firstDerivative(interval.start) - firstDerivative(interval.end);
-    const double ratio = firstDerivative(interval.start) / difference;
-    const double intersection = interval.start + ratio * interval.length();
+    double intersection;
     
-    if (std::abs(firstDerivative(intersection)) <= epsilon) {
-        return intersection;
-    }
+    do {
+        double difference = firstDerivative(interval.start) - firstDerivative(interval.end);
+        double ratio = firstDerivative(interval.start) / difference;
+        intersection = interval.start + ratio * interval.length();
+        
+        if (firstDerivative(intersection) < 0) {
+            interval.start = intersection;
+        } else {
+            interval.end = intersection;
+        }
+        
+    } while (std::abs(firstDerivative(intersection)) <= epsilon);
     
-    if (firstDerivative(intersection) < 0) {
-        return chordesMethod(Interval(intersection, interval.end), epsilon);
-    } else {
-        return chordesMethod(Interval(interval.start, intersection), epsilon);
-    }
+    return intersection;
 }
 
 double newtonMethod(Interval interval, double epsilon) {
