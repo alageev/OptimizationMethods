@@ -8,7 +8,6 @@
 #include <iostream>
 #include <cmath>
 
-#include <iomanip>
 
 const double phi = 1.61803398875;
 
@@ -68,20 +67,25 @@ int main(int argc, const char * argv[]) {
     const Interval interval = Interval(1, 2);
     
     const double halvesResult = halvesMethod(interval, epsilon);
-    const double goldenRatioResult = goldenRatioMethod(interval, epsilon);
-    const double chordesResult = chordesMethod(interval, epsilon);
-    const double newtonResult = newtonMethod(interval, epsilon);
-    
     std::cout << "halves method:       f(x) = " << function(halvesResult)      << ", x = " << halvesResult      << std::endl;
+    
+    const double goldenRatioResult = goldenRatioMethod(interval, epsilon);
     std::cout << "golden ratio method: f(x) = " << function(goldenRatioResult) << ", x = " << goldenRatioResult << std::endl;
-    std::cout << "chordes method:      f(x) = " << function(chordesResult)     << ", x = " << chordesResult     << std::endl;
+    
+    try {
+        const double chordesResult = chordesMethod(interval, epsilon);
+        std::cout << "chordes method:      f(x) = " << function(chordesResult)     << ", x = " << chordesResult     << std::endl;
+    } catch(const std::exception) {
+        std::cout << "chordes method cannot be used on this function on this interval"<< std::endl;
+    }
+    
+    const double newtonResult = newtonMethod(interval, epsilon);
     std::cout << "newton method:       f(x) = " << function(newtonResult)      << ", x = " << newtonResult      << std::endl;
     
     return 0;
 }
 
 double halvesMethod(Interval interval, double epsilon) {
-    // Checking condition satisfaction
     if (interval.length() <= 2 * epsilon) {
         return interval.middle();
     }
@@ -118,23 +122,15 @@ double goldenRatioMethod(Interval interval, double epsilon) {
 }
 
 
-// If signs of the derivative on both sides are equal, function returns least of the ends
 double chordesMethod(Interval interval, double epsilon) {
     
-    if (firstDerivative(interval.start) * firstDerivative(interval.end) > 0) {
-        if (firstDerivative(interval.start) > 0) {
-            return interval.start;
-        } else {
-            return interval.end;
-        }
+    if (firstDerivative(interval.start) * firstDerivative(interval.end) >= 0) {
+        throw std::range_error("invalid interval");
     }
     
-    if (firstDerivative(interval.start) * firstDerivative(interval.end) == 0) {
-        const double x = firstDerivative(interval.start) < firstDerivative(interval.end) ? interval.start : interval.end;
-        return x;
-    }
-        
-    const double intersection = interval.start + firstDerivative(interval.start) / (firstDerivative(interval.start) - firstDerivative(interval.end)) * interval.length();
+    const double difference = firstDerivative(interval.start) - firstDerivative(interval.end);
+    const double ratio = firstDerivative(interval.start) / difference;
+    const double intersection = interval.start + ratio * interval.length();
     
     if (std::abs(firstDerivative(intersection)) <= epsilon) {
         return intersection;
