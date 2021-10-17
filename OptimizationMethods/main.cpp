@@ -15,8 +15,13 @@ struct Interval {
     double end;
     
     Interval(double start, double end) {
-        this->start = start;
-        this->end = end;
+        if (start <= end) {
+            this->start = start;
+            this->end = end;
+        } else {
+            this->start = end;
+            this->end = start;
+        }
     }
     
     double middle() {
@@ -24,7 +29,7 @@ struct Interval {
     }
     
     double length() {
-        return (end - start) / 2;
+        return (end - start);
     }
     
     bool contains(double value) {
