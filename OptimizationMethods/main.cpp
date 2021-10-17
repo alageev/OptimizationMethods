@@ -8,6 +8,8 @@
 #include <iostream>
 #include <cmath>
 
+#include <iomanip>
+
 const double phi = 1.61803398875;
 
 struct Interval {
@@ -100,7 +102,7 @@ double goldenRatioMethod(Interval interval, double epsilon) {
     double leftCoordinate  = interval.start + (2 - phi) * interval.length();
     double rightCoordinate = interval.start + (phi - 1) * interval.length();
     
-    while (interval.length() > 2 * epsilon) {
+    do {
         if (function(leftCoordinate) < function(rightCoordinate)) {
             interval.end = rightCoordinate;
             rightCoordinate = leftCoordinate;
@@ -110,7 +112,7 @@ double goldenRatioMethod(Interval interval, double epsilon) {
             leftCoordinate = rightCoordinate;
             rightCoordinate = interval.start + (phi - 1) * interval.length();
         }
-    }
+    } while (interval.length() > 2 * epsilon);
     
     return interval.middle();
 }
