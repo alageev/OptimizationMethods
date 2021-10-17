@@ -10,16 +10,6 @@
 
 const double phi = 1.61803398875;
 
-struct Point {
-    double coordinate;
-    double value;
-    
-    Point(double coordinate, double value) {
-        this->coordinate = coordinate;
-        this->value = value;
-    }
-};
-
 struct Interval {
     double start;
     double end;
@@ -59,10 +49,10 @@ inline double secondDerivative(double x) {
     return 2 + 1 / x;
 }
 
-Point halvesMethod(Interval, double);
-Point goldenRatioMethod(Interval, double);
-Point chordesMethod(Interval, double);
-Point newtonMethod(Interval, double);
+double halvesMethod(Interval, double);
+double goldenRatioMethod(Interval, double);
+double chordesMethod(Interval, double);
+double newtonMethod(Interval, double);
 
 int main(int argc, const char * argv[]) {
     
@@ -70,23 +60,23 @@ int main(int argc, const char * argv[]) {
     const double epsilon = 0.05;
     const Interval interval = Interval(1, 2);
     
-    const Point halvesResult = halvesMethod(interval, epsilon);
-    const Point goldenRatioResult = goldenRatioMethod(interval, epsilon);
-    const Point chordesResult = chordesMethod(interval, epsilon);
-    const Point newtonResult = newtonMethod(interval, epsilon);
+    const double halvesResult = halvesMethod(interval, epsilon);
+    const double goldenRatioResult = goldenRatioMethod(interval, epsilon);
+    const double chordesResult = chordesMethod(interval, epsilon);
+    const double newtonResult = newtonMethod(interval, epsilon);
     
-    std::cout << "halves method:       f(x) = " << halvesResult.value      << ", x = " << halvesResult.coordinate      << std::endl;
-    std::cout << "golden ratio method: f(x) = " << goldenRatioResult.value << ", x = " << goldenRatioResult.coordinate << std::endl;
-    std::cout << "chordes method:      f(x) = " << chordesResult.value     << ", x = " << chordesResult.coordinate     << std::endl;
-    std::cout << "newton method:       f(x) = " << newtonResult.value      << ", x = " << newtonResult.coordinate      << std::endl;
+    std::cout << "halves method:       f(x) = " << function(halvesResult)      << ", x = " << halvesResult      << std::endl;
+    std::cout << "golden ratio method: f(x) = " << function(goldenRatioResult) << ", x = " << goldenRatioResult << std::endl;
+    std::cout << "chordes method:      f(x) = " << function(chordesResult)     << ", x = " << chordesResult     << std::endl;
+    std::cout << "newton method:       f(x) = " << function(newtonResult)      << ", x = " << newtonResult      << std::endl;
     
     return 0;
 }
 
-Point halvesMethod(Interval interval, double epsilon) {
+double halvesMethod(Interval interval, double epsilon) {
     // Checking condition satisfaction
     if (interval.length() <= 2 * epsilon) {
-        return Point(interval.middle(), function(interval.middle()));
+        return interval.middle();
     }
     
     const double middle = interval.middle();
@@ -100,7 +90,7 @@ Point halvesMethod(Interval interval, double epsilon) {
     }
 }
 
-Point goldenRatioMethod(Interval interval, double epsilon) {
+double goldenRatioMethod(Interval interval, double epsilon) {
     
     double leftCoordinate  = interval.start + (2 - phi) * interval.length();
     double rightCoordinate = interval.start + (phi - 1) * interval.length();
@@ -117,30 +107,30 @@ Point goldenRatioMethod(Interval interval, double epsilon) {
         }
     }
     
-    return Point(interval.middle(), function(interval.middle()));
+    return interval.middle();
 }
 
 
 // If signs of the derivative on both sides are equal, function returns least of the ends
-Point chordesMethod(Interval interval, double epsilon) {
+double chordesMethod(Interval interval, double epsilon) {
     
     if (firstDerivative(interval.start) * firstDerivative(interval.end) > 0) {
         if (firstDerivative(interval.start) > 0) {
-            return Point(interval.start, function(interval.start));
+            return interval.start;
         } else {
-            return Point(interval.end, function(interval.end));
+            return interval.end;
         }
     }
     
     if (firstDerivative(interval.start) * firstDerivative(interval.end) == 0) {
         const double x = firstDerivative(interval.start) < firstDerivative(interval.end) ? interval.start : interval.end;
-        return Point(x, function(x));
+        return x;
     }
         
     const double intersection = interval.start + firstDerivative(interval.start) / (firstDerivative(interval.start) - firstDerivative(interval.end)) * interval.length();
     
     if (std::abs(firstDerivative(intersection)) <= epsilon) {
-        return Point(intersection, function(intersection));
+        return intersection;
     }
     
     if (firstDerivative(intersection) < 0) {
@@ -150,7 +140,7 @@ Point chordesMethod(Interval interval, double epsilon) {
     }
 }
 
-Point newtonMethod(Interval interval, double epsilon) {
+double newtonMethod(Interval interval, double epsilon) {
     
     // Random is taken just for fun, because the specification didn't stated it should be in the middle of the interval:)
     double x = interval.random();
@@ -165,5 +155,5 @@ Point newtonMethod(Interval interval, double epsilon) {
         }
     }
     
-    return Point(x, function(x));
+    return x;
 }
