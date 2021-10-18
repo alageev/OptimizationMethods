@@ -78,7 +78,7 @@ double chordesMethod(Interval interval, double epsilon) {
             interval.end = intersection;
         }
         
-    } while (std::abs(firstDerivative(intersection)) <= epsilon);
+    } while (std::abs(firstDerivative(intersection)) > epsilon);
     
     return intersection;
 }
