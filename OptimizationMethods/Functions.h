@@ -62,7 +62,7 @@ double goldenRatioMethod(Interval interval, double epsilon) {
 double chordesMethod(Interval interval, double epsilon) {
     
     if (firstDerivative(interval.start) * firstDerivative(interval.end) >= 0) {
-        throw std::range_error("derivatives has equal sign on both ends of given interval");
+        throw std::range_error("derivatives have equal sign on both ends of given interval");
     }
     
     double intersection;
