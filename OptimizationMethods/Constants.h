@@ -11,7 +11,7 @@
 #include "Interval.h"
 
 const double epsilon = 0.05;
-const Interval interval = Interval(1, 2);
+const Interval interval = Interval(0.5, 2);
 const double phi = 1.61803398875;
 
 #endif /* Constants_h */

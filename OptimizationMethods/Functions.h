@@ -33,9 +33,9 @@ double halvesMethod(Interval interval, double epsilon) {
     const double rightCoordinate = middle + epsilon / 2;
     
     if (function(leftCoordinate) < function(rightCoordinate)) {
-        return halvesMethod(Interval(interval.start, leftCoordinate), epsilon);
+        return halvesMethod(Interval(interval.start, rightCoordinate), epsilon);
     } else {
-        return halvesMethod(Interval(rightCoordinate, interval.end), epsilon);
+        return halvesMethod(Interval(leftCoordinate, interval.end), epsilon);
     }
 }
 
