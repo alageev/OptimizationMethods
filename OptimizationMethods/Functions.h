@@ -101,7 +101,7 @@ double newtonMethod(Interval interval, double epsilon) {
 
 
 
-double fraction(int a, int b, int c) {
+double fraction(double a, double b, double c) {
     return function(a) * (b - c);
 }
 
