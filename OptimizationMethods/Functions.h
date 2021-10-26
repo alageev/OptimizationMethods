@@ -99,4 +99,31 @@ double newtonMethod(Interval interval, double epsilon) {
     return x;
 }
 
+
+
+double fraction(int a, int b, int c) {
+    return function(a) * (b - c);
+}
+
+double quadraticInterpolationMethod(Interval interval, double epsilon) {
+    
+    double x[3];
+    if (function(initialApproximation) < function(initialApproximation + epsilon)) {
+        x[0] = initialApproximation - epsilon;
+        x[1] = initialApproximation;
+        x[2] = initialApproximation + epsilon;
+    } else {
+        x[0] = initialApproximation;
+        x[1] = initialApproximation + epsilon;
+        x[2] = initialApproximation + 2 * epsilon;
+    }
+    
+    double const xMin = (x[0] + x[1]) / 2 +
+    (x[2] - x[0]) * (x[2] - x[1]) * (function(x[1]) - function(x[0]))
+    / (fraction(x[0], x[1], x[2]) + fraction(x[1], x[2], x[0]) + fraction(x[2], x[0], x[1]));
+    return xMin;
+}
+
+
+
 #endif /* Functions_h */

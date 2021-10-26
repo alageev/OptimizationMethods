@@ -14,4 +14,6 @@ const double epsilon = 0.05;
 const Interval interval = Interval(1, 2);
 const double phi = 1.61803398875;
 
+const double initialApproximation = 1.07;
+
 #endif /* Constants_h */

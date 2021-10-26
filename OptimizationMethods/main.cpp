@@ -30,6 +30,9 @@ int main(int argc, const char * argv[]) {
     } catch(const std::exception &exception) {
         std::cout << "newton method: " << exception.what() << std::endl;
     }
+
+    const double interpolationResult = quadraticInterpolationMethod(interval, epsilon);
+    std::cout << "interpolation method:       f(x) = " << function(interpolationResult)      << ", x = " << interpolationResult      << std::endl;
     
     return 0;
 }
