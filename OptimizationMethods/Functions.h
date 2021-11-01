@@ -100,28 +100,47 @@ double newtonMethod(Interval interval, double epsilon) {
 }
 
 
-
 double fraction(double a, double b, double c) {
     return function(a) * (b - c);
 }
 
+template<typename T, size_t N>
+void sort(T (&array)[N]) {
+    for (int i = 0; i < N; i++) {
+        for (int j = N - 1; j > i; j--) {
+            if (array[i] > array[j]) {
+                const T temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+    }
+}
+
 double quadraticInterpolationMethod(Interval interval, double epsilon) {
     
-    double x[3];
+    double x[4];
     if (function(initialApproximation) < function(initialApproximation + epsilon)) {
         x[0] = initialApproximation - epsilon;
         x[1] = initialApproximation;
         x[2] = initialApproximation + epsilon;
+        x[3] = x[2];
     } else {
         x[0] = initialApproximation;
         x[1] = initialApproximation + epsilon;
         x[2] = initialApproximation + 2 * epsilon;
+        x[3] = x[2];
     }
     
-    double const xMin = (x[0] + x[1]) / 2 +
-    (x[2] - x[0]) * (x[2] - x[1]) * (function(x[1]) - function(x[0]))
-    / (fraction(x[0], x[1], x[2]) + fraction(x[1], x[2], x[0]) + fraction(x[2], x[0], x[1]));
-    return xMin;
+    while (abs(x[0] - x[1]) >= epsilon) {
+        x[3] = (x[0] + x[1]) / 2 +
+        (x[2] - x[0]) * (x[2] - x[1]) * (function(x[1]) - function(x[0]))
+        / (fraction(x[0], x[1], x[2]) + fraction(x[1], x[2], x[0]) + fraction(x[2], x[0], x[1]));
+
+        sort(x);
+    }
+    
+    return x[0];
 }
 
 
