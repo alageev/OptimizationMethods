@@ -104,42 +104,43 @@ double fraction(double a, double b, double c) {
     return function(a) * (b - c);
 }
 
-template<typename T, size_t N>
-void sort(T (&array)[N]) {
-    for (int i = 0; i < N; i++) {
-        for (int j = N - 1; j > i; j--) {
-            if (array[i] > array[j]) {
-                const T temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
-            }
-        }
-    }
-}
-
 double quadraticInterpolationMethod(Interval interval, double epsilon) {
     
-    double x[4];
-    if (function(initialApproximation) < function(initialApproximation + epsilon)) {
-        x[0] = initialApproximation - epsilon;
-        x[1] = initialApproximation;
-        x[2] = initialApproximation + epsilon;
-        x[3] = x[2];
-    } else {
-        x[0] = initialApproximation;
-        x[1] = initialApproximation + epsilon;
-        x[2] = initialApproximation + 2 * epsilon;
-        x[3] = x[2];
-    }
+    double *x = new double[4];
+    
+    x[0] = interval.start;
+    x[1] = interval.middle();
+    x[2] = interval.end;
     
     while (abs(x[0] - x[1]) >= epsilon) {
+        
         x[3] = (x[0] + x[1]) / 2 +
         (x[2] - x[0]) * (x[2] - x[1]) * (function(x[1]) - function(x[0]))
         / (fraction(x[0], x[1], x[2]) + fraction(x[1], x[2], x[0]) + fraction(x[2], x[0], x[1]));
 
-        sort(x);
+        int maxIndex = 0;
+        double maxFunction = function(x[maxIndex]);
+        
+        for (int i = 1; i < 4; i++) {
+            const double iFunction = function(x[i]);
+            if (maxFunction <= iFunction) {
+                maxIndex = i;
+                maxFunction = iFunction;
+            }
+        }
+        
+        for (int i = maxIndex; i < 3; i++) {
+            x[i] = x[i + 1];
+        }
+        
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2 - i; j++) {
+                if (x[j] > x[j + 1]) {
+                    std::swap(x[j], x[j + 1]);
+                }
+            }
+        }
     }
-    
     return x[0];
 }
 
