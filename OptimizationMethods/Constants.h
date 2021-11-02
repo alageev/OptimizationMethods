@@ -8,10 +8,11 @@
 #ifndef Constants_h
 #define Constants_h
 
-#include "Interval.h"
+#include "Vector.h"
+
 
 const double epsilon = 0.05;
-const Interval interval = Interval(0.5, 2);
-const double phi = 1.61803398875;
+const double step = 0.25;
+const Vector initialVector = Vector(10, 10);
 
 #endif /* Constants_h */
