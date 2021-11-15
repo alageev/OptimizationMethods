@@ -32,9 +32,8 @@ Vector gradientDescent(Vector vector) {
     Vector antigradient = -gradF(minVector);
     
     while (antigradient.norm() >= epsilon) {
-        Vector newVector = minVector + antigradient * step;
-        minVector = newVector;
-        antigradient = -gradF(newVector);
+        minVector = minVector + antigradient * step;
+        antigradient = -gradF(minVector);
     }
     
     return minVector;
