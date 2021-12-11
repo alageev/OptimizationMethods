@@ -10,9 +10,7 @@
 
 #include "Vector.h"
 
-
-const double epsilon = 0.05;
-const double step = 0.25;
-const Vector initialVector = Vector(10, 10);
+const double mutationProbability = 0.01;
+const int populationSize = 4;
 
 #endif /* Constants_h */
