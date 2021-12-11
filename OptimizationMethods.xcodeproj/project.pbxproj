@@ -25,7 +25,6 @@
 /* Begin PBXFileReference section */
 		6F386F9C271C7CA300BE909D /* Functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Functions.h; sourceTree = "<group>"; };
 		6F386F9D271C7D0E00BE909D /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		6FB2ADD627318075001256ED /* Vector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		6FE43620270C779D0061284D /* OptimizationMethods */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OptimizationMethods; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FE43623270C779D0061284D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,7 +62,6 @@
 				6FE43623270C779D0061284D /* main.cpp */,
 				6F386F9D271C7D0E00BE909D /* Constants.h */,
 				6F386F9C271C7CA300BE909D /* Functions.h */,
-				6FB2ADD627318075001256ED /* Vector.h */,
 			);
 			path = OptimizationMethods;
 			sourceTree = "<group>";
