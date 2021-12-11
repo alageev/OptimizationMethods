@@ -17,6 +17,6 @@ const double distances[5][5] = {
     {5, 7, 0, 7, 9},
     {3, 6, 7, 0, 9},
     {8, 8, 9, 9, 0}
-}
+};
 
 #endif /* Constants_h */
