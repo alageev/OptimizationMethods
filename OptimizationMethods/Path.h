@@ -7,38 +7,29 @@
 
 #ifndef Path_h
 #define Path_h
+#include "Constants.h"
+#include <iostream>
 
+struct CrossingoverResult;
 
 struct Path {
-    int vertices[5] = { 0 };
+    int vertices[numberOfCities] = { 0 };
     int length = 0;
+
+    Path();
+    Path(int*);
     
-    Path() {
-        int generated = 0;
-        
-        while (generated < 5) {
-            int newVertex = rand() % 5;
-            bool alreadyInArray = false;
-            
-            for (int i = 0; i < generated; i++) {
-                if (vertices[i] == newVertex) {
-                    alreadyInArray = true;
-                    break;
-                }
-            }
-            
-            if (!alreadyInArray) {
-                vertices[generated] = newVertex;
-                generated++;
-            }
-        }
-        
-        for (int i = 0; i < 5; i++) {
-            int const thisVertex = vertices[i];
-            int const nextVertex = vertices[(i + 1) % 5];
-            length += distances[thisVertex][nextVertex];
-        }
-    }
+    CrossingoverResult operator+(Path rhs);
+    friend std::ostream& operator <<(std::ostream&, const Path&);
+    static bool descending(Path, Path);
 };
+
+struct Crossingover {
+    Path first;
+    Path second;
+    
+    Crossingover(Path, Path);
+};
+
 
 #endif /* Path_h */
